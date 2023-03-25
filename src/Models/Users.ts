@@ -3,12 +3,13 @@ import {store} from "../firebase";
 import {Collections} from "../utility";
 import {nanoid} from "nanoid";
 
-interface User {
+export interface User {
     id:string,
     username:string,
-    admin:boolean
+    admin:boolean,
+    password:string
 }
-class Users{
+export class Users{
     static async getUsers(userNames:Array<string>):Promise<Array<User>>{
         let user_arr:Array<User> = [];
         let users = await store.collection(Collections.Users).where("username","in",userNames).get();
@@ -17,18 +18,22 @@ class Users{
         })
         return user_arr
     }
-    static async createUser(username:string,admin:boolean):Promise<User>{
+    static async setAdmin(id:string,admin:boolean){
+
+    }
+    static async createUser(username:string,password:string):Promise<User>{
         let id = nanoid()
         let exist_user = (await Users.getUsers([username]))
         if (exist_user.length){
             console.info("User already exists")
-            return exist_user[0]
+            throw new Error("User already exists");
         }
 
-        let new_user: User ={
+        let new_user:User ={
             id:id,
             username:username,
-            admin:admin
+            admin:false,
+            password:password
         }
         try {
             await store.collection(Collections.Users).doc(new_user.id).set(new_user);
@@ -39,5 +44,5 @@ class Users{
         return new_user
     }
 }
-console.info(Users.createUser("wow",false));
-console.info(Users.getUsers(["wow"]));
+// console.info(Users.createUser("wow","none"));
+// console.info(Users.getUsers(["wow"]));
