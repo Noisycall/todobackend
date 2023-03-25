@@ -3,15 +3,17 @@ import passport from "passport";
 import bodyParser from "body-parser";
 require("./auth/auth")
 import {router as routes} from "./routes/routes"
+import {securedRoutes} from "./routes/securedRoutes";
 
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.json())
 
 app.use('/', routes);
 
 // Plug in the JWT strategy as a middleware so only verified users can access this route.
-// app.use('/user', passport.authenticate('jwt', { session: false }), secureRoute);
+app.use('/secured', passport.authenticate('jwt', { session: false }), securedRoutes);
 
 // Handle errors.
 //@ts-ignore

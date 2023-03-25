@@ -9,6 +9,9 @@ export interface User {
     admin:boolean,
     password:string
 }
+export enum UserErrors{
+    AlreadyExist="already_exist"
+}
 export class Users{
     static async getUsers(userNames:Array<string>):Promise<Array<User>>{
         let user_arr:Array<User> = [];
@@ -26,7 +29,7 @@ export class Users{
         let exist_user = (await Users.getUsers([username]))
         if (exist_user.length){
             console.info("User already exists")
-            throw new Error("User already exists");
+            return {id:UserErrors.AlreadyExist,password:"",admin:false,username:""}
         }
 
         let new_user:User ={
