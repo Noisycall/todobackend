@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import {router as routes, securedRoutes} from "./routes/routers"
 
 require("./auth/auth")
+require("./routes/auth/auth_routes")
 require("./routes/posts/posts")
 require("./routes/todos/todos")
 const app = express();

@@ -8,6 +8,13 @@
 - Uses ExpressJS as the API Framework
 - Uses PassportJS to facilitate Login/Signup and JWT authentication
 
+## How to Login
+First, Create an account
+![img.png](img.png)
+Next Login and get returned token
+![img_1.png](img_1.png)
+Place the token in this location, and the rest of the apis will start working
+![img_2.png](img_2.png)
 ## Structure
 ### Auth
 - The auth file sets up Passport JS

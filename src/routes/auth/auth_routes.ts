@@ -29,9 +29,9 @@ router.post(
                 try {
                     console.info(user);
                     if (err || !user) {
-                        const error = new Error('An error occurred.');
-
-                        return next(error);
+                        console.info("Login Error",err,user)
+                        res.status(400).json(info)
+                        return;
                     }
 
                     req.login(

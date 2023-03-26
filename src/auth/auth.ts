@@ -3,6 +3,7 @@ import passport_jwt from "passport-jwt"
 import passport_local from "passport-local"
 import bcrypt from "bcrypt"
 import {Users} from "../Models/Users";
+
 const localStrategy = passport_local.Strategy;
 const JWTstrategy = passport_jwt.Strategy
 const ExtractJWT = passport_jwt.ExtractJwt
@@ -47,9 +48,9 @@ passport.use(
             usernameField: 'username',
             passwordField: 'password'
         },
-        async (email, password, done) => {
+        async (username, password, done) => {
             try {
-                const user = await Users.getUsers([email]);
+                const user = await Users.getUsers([username]);
 
                 if (!user.length) {
                     return done(null, false, { message: 'User not found' });
