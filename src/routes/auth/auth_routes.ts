@@ -1,8 +1,7 @@
 import passport from "passport";
-import jwt from "jsonwebtoken"
-import express from "express";
-import {User, UserErrors} from "../Models/Users";
-export const router = express.Router();
+import {User, UserErrors} from "../../Models/Users";
+import jwt from "jsonwebtoken";
+import {router} from "../routers";
 
 router.post(
     '/signup',

@@ -1,8 +1,7 @@
 import express from "express";
 import passport from "passport";
 import bodyParser from "body-parser";
-import {router as routes} from "./routes/routes"
-import {securedRoutes} from "./routes/securedRoutes";
+import {router as routes, securedRoutes} from "./routes/routers"
 
 require("./auth/auth")
 
