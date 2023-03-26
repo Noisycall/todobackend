@@ -9,6 +9,8 @@
 - Uses PassportJS to facilitate Login/Signup and JWT authentication
 
 ## How to Login
+**Authentication is done via bearer token, which is a JWT returned after login**
+
 First, Create an account
 ![img.png](docs/img.png)
 Next Login and get returned token
@@ -16,7 +18,9 @@ Next Login and get returned token
 Place the token in this location, and the rest of the apis will start working
 ![img_2.png](docs/img_2.png)
 
-Authentication is done via bearer token, which is a JWT returned after login
+## Update Requests
+- All fields are optional and example queries are provided in Postman.
+
 ## Structure
 ### Auth
 - The auth file sets up Passport JS
