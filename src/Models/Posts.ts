@@ -69,18 +69,28 @@ export class Posts {
     }
 
     static async getPostsByTime(userid: null | string, limit = 10, offset?: Post) {
-        let posts_col = store.collection(Collections.Posts);
-        let query: FirebaseFirestore.Query = posts_col;
+        let query: FirebaseFirestore.Query = store.collection(Collections.Posts);
         if (userid) {
             query = query.where("userId", "==", userid);
         }
         query = query.orderBy("creationTime", "desc")
         if (offset) {
-            query = query.startAfter(offset);
+            query = query.startAfter(offset.creationTime);
         }
         query = query.limit(limit);
         let result = await query.get();
         return result.docs.map(doc => doc.data());
 
+    }
+    static async getPost(id:string):Promise<Post|undefined>{
+        const posts = store.collection(Collections.Posts);
+        try{
+            let doc =await posts.doc(id).get();
+            return doc.data() as Post;
+        }
+        catch (err){
+            console.error("Could not get todo",err);
+
+        }
     }
 }

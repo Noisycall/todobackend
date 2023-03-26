@@ -20,15 +20,25 @@ export interface Todo {
 }
 
 export class Todos {
+    static async getTodo(id:string):Promise<Todo|undefined>{
+        const todos = store.collection(Collections.Todos);
+        try{
+            let doc =await todos.doc(id).get();
+            return doc.data() as Todo;
+        }
+        catch (err){
+            console.error("Could not get todo",err);
+            return undefined
+        }
+    }
     static async getTodosByTime(userid:null|string,limit = 10, offset?: Todo) {
-        let todos_col = store.collection(Collections.Todos);
-        let query:FirebaseFirestore.Query = todos_col;
+        let query:FirebaseFirestore.Query = store.collection(Collections.Todos);
         if(userid){
             query = query.where("userId","==",userid);
         }
         query = query.orderBy("creationTime","desc")
         if(offset){
-            query = query.startAfter(offset);
+            query = query.startAfter(offset.creationTime);
         }
         query = query.limit(limit);
         let result = await query.get();
@@ -45,7 +55,7 @@ export class Todos {
             complete: TodoStatus.Incomplete,
             ...data
         }
-        let val = await todos.doc(todo.id).set(todo);
+        await todos.doc(todo.id).set(todo);
         return todo
     }
 
@@ -55,7 +65,7 @@ export class Todos {
         //@ts-ignore
         delete data.id
         try {
-            let val = await todos.doc(id).update({...data, lastUpdated: Date.now()});
+            await todos.doc(id).update({...data, lastUpdated: Date.now()});
         } catch (err) {
             console.error("Error while trying to update todo", err);
             return err

@@ -1,15 +1,15 @@
 import express from "express";
 import passport from "passport";
 import bodyParser from "body-parser";
-require("./auth/auth")
 import {router as routes} from "./routes/routes"
 import {securedRoutes} from "./routes/securedRoutes";
+
+require("./auth/auth")
 
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json())
-
 app.use('/', routes);
 
 // Plug in the JWT strategy as a middleware so only verified users can access this route.
