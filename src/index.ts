@@ -4,7 +4,8 @@ import bodyParser from "body-parser";
 import {router as routes, securedRoutes} from "./routes/routers"
 
 require("./auth/auth")
-
+require("./routes/posts/posts")
+require("./routes/todos/todos")
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));

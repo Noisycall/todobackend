@@ -1,9 +1,11 @@
 import {store} from "../firebase";
 import {Collections} from "../utility";
 import {nanoid} from "nanoid";
+import {firestore} from "firebase-admin";
 
 export interface Comment {
     id: string,
+    userId:string
     creationTime: number,
     text: string
 }
@@ -54,17 +56,22 @@ export class Posts {
         }
     }
 
-    static async addCommentToPost(postId: string, comment: Comment) {
+    static async addCommentToPost(postId: string, comment: {text:string,userId:string}) {
         let posts_col = store.collection(Collections.Posts)
         let post = posts_col.doc(postId);
+        let post_comment = {
+            text:comment.text,
+            userId:comment.userId,
+            id:nanoid(),
+            creationTime:Date.now()
+        }
         try {
             await post.update({
-                comments: FirebaseFirestore.FieldValue.arrayUnion(comment)
+                comments: firestore.FieldValue.arrayUnion(post_comment)
             })
-            return true;
+            return post_comment;
         } catch (err) {
             console.error("Error while adding comment", err);
-            return false;
         }
     }
 
