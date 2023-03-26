@@ -15,6 +15,8 @@ Next Login and get returned token
 ![img_1.png](img_1.png)
 Place the token in this location, and the rest of the apis will start working
 ![img_2.png](img_2.png)
+
+Authentication is done via bearer token, which is a JWT returned after login
 ## Structure
 ### Auth
 - The auth file sets up Passport JS
